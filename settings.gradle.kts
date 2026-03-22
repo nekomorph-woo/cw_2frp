@@ -1,0 +1,1 @@
+rootProject.name = "cw2_frp"
