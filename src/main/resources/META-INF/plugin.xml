@@ -8,7 +8,8 @@
     <name>FRP.Gen1</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-         Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-description -->
+    <vendor email="nekomorph.woo@gmail.com" url="https://github.com/nekomorph-woo" icon="/META-INF/pluginIcon.svg">Chaos Woo</vendor>
+
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-description -->
     <description><![CDATA[
