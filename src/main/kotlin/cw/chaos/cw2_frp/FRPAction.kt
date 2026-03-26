@@ -10,16 +10,16 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 
 /**
- * 生成 FRP 引用的一级菜单（Action Group）
+ * 编辑器右键菜单
  */
 class FRPActionGroup : ActionGroup(
-    "生成 FRP 引用",
+    "Gen #frp",
     "生成文件引用指针并复制到剪贴板",
     null
 ) {
     override fun getChildren(e: AnActionEvent?): Array<AnAction> {
         return (1..10).map { index ->
-            FRPIndexAction(index)
+            FRPEditorAction(index)
         }.toTypedArray()
     }
 
@@ -33,9 +33,30 @@ class FRPActionGroup : ActionGroup(
 }
 
 /**
- * 二级菜单：具体的索引选项
+ * 项目树右键菜单
  */
-class FRPIndexAction(private val index: Int) : AnAction(
+class FRPProjectTreeActionGroup : ActionGroup(
+    "Gen #frp",
+    "生成文件/文件夹引用指针并复制到剪贴板",
+    null
+) {
+    override fun getChildren(e: AnActionEvent?): Array<AnAction> {
+        return (1..10).map { index ->
+            FRPFileAction(index)
+        }.toTypedArray()
+    }
+
+    override fun update(e: AnActionEvent) {
+        val virtualFile = e.getData(CommonDataKeys.VIRTUAL_FILE)
+        // 在项目树中选中文件/文件夹时显示
+        e.presentation.isEnabledAndVisible = virtualFile != null
+    }
+}
+
+/**
+ * 二级菜单：编辑器操作
+ */
+class FRPEditorAction(private val index: Int) : AnAction(
     "#frp$index",
     "生成 #frp$index 引用",
     null
@@ -95,6 +116,46 @@ class FRPIndexAction(private val index: Int) : AnAction(
         ClipboardService.copyToClipboard(frpText)
 
         // 显示通知
+        showNotification(project, frpText)
+    }
+
+    private fun showNotification(project: Project, text: String) {
+        NotificationGroupManager.getInstance()
+            .getNotificationGroup("FRP Generator")
+            .createNotification(
+                "已复制到剪贴板",
+                text,
+                NotificationType.INFORMATION
+            )
+            .notify(project)
+    }
+}
+
+/**
+ * 二级菜单：项目树文件/文件夹操作
+ */
+class FRPFileAction(private val index: Int) : AnAction(
+    "#frp$index",
+    "生成 #frp$index 引用",
+    null
+) {
+    private val generator = FRPGenerator()
+    private val pathResolver = PathResolver()
+
+    override fun actionPerformed(e: AnActionEvent) {
+        val project = e.project ?: return
+        val virtualFile = e.getData(CommonDataKeys.VIRTUAL_FILE) ?: return
+
+        val relativePath = pathResolver.resolveRelativePath(
+            projectPath = project.basePath ?: return,
+            filePath = virtualFile.path,
+            isDirectory = virtualFile.isDirectory
+        )
+
+        val frpText = generator.generateFileReference(index, relativePath)
+
+        // 复制到剪贴板
+        ClipboardService.copyToClipboard(frpText)
         showNotification(project, frpText)
     }
 

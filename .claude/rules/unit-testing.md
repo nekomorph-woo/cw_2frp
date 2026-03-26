@@ -13,17 +13,10 @@
 ```
 project/
 ├── src/main/kotlin/
-│   ├── module/                    # 纯逻辑模块（可单元测试）
-│   │   ├── FRPGenerator.kt
-│   │   └── PathResolver.kt
-│   └── intellij/                  # IntelliJ 依赖模块（需集成测试）
-│       ├── MyAction.kt
-│       └── MyToolWindow.kt
 ├── unit-test/                      # 独立单元测试子模块
 │   ├── build.gradle.kts
 │   └── src/test/kotlin/
-│       ├── FRPGeneratorTest.kt
-│       └── PathResolverTest.kt
+│       ├── *Test.kt
 ├── build.gradle.kts               # 主模块配置
 └── settings.gradle.kts            # 包含子模块
 ```

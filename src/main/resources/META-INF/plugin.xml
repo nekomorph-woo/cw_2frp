@@ -1,4 +1,4 @@
-<!-- Plugin Configuration File: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+ <!-- Plugin Configuration File: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <!-- Unique identifier of the plugin. It should be FQN, cannot be changed between the plugin versions. -->
     <id>cw.chaos.cw2_frp</id>
@@ -8,8 +8,7 @@
     <name>FRP.Gen1</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor url="https://github.com/nekomorph-woo">Nekomorph</vendor>
-
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-description -->
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-description -->
     <description><![CDATA[
@@ -46,6 +45,16 @@
                popup="true"
                icon="AllIcons.Actions.Copy">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </group>
+
+        <!-- 项目树右键菜单 -->
+        <group id="cw.chaos.cw2_frp.FRPProjectTreeActionGroup"
+               class="cw.chaos.cw2_frp.FRPProjectTreeActionGroup"
+               text="Gen #frp"
+               description="生成文件/文件夹引用指针并复制到剪贴板"
+               popup="true"
+               icon="AllIcons.Actions.Copy">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
         </group>
     </actions>
 </idea-plugin>
