@@ -5,7 +5,7 @@
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-name -->
-    <name>FRP Generator</name>
+    <name>FRP.Gen1</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor url="https://github.com/nekomorph-woo">Nekomorph</vendor>
@@ -20,8 +20,9 @@
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
-    <depends>com.intellij.modules.compose</depends>
-    <depends>org.jetbrains.kotlin</depends>
+    <depends>com.intellij.modules.platform</depends>
+    <!-- Kotlin 插件设为可选 -->
+    <depends optional="true">org.jetbrains.kotlin</depends>
 
     <resource-bundle>messages.MyMessageBundle</resource-bundle>
 
@@ -40,7 +41,7 @@
         <!-- 编辑器右键菜单 -->
         <group id="cw.chaos.cw2_frp.FRPActionGroup"
                class="cw.chaos.cw2_frp.FRPActionGroup"
-               text="生成 FRP 引用"
+               text="Gen #frp"
                description="生成文件引用指针并复制到剪贴板"
                popup="true"
                icon="AllIcons.Actions.Copy">

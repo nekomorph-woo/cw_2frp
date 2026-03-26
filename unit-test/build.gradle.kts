@@ -19,6 +19,7 @@ sourceSets {
             exclude("MyMessageBundle.kt")
             exclude("FRPAction.kt")
             exclude("ClipboardService.kt")
+            exclude("PsiContextDetector.kt")
         }
     }
 }

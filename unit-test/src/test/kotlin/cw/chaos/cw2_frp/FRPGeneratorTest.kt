@@ -108,4 +108,61 @@ class FRPGeneratorTest {
             assertEquals("#frp3 to app/src/main.kt", result)
         }
     }
+
+    @Nested
+    @DisplayName("方法引用")
+    inner class MethodReference {
+
+        @Test
+        @DisplayName("无参数方法引用")
+        fun `should generate method reference with no parameters`() {
+            val result = generator.generateMethodReference(
+                index = 1,
+                relativePath = "src/main/java/Example.java",
+                methodName = "main",
+                parameterTypes = emptyList()
+            )
+
+            assertEquals("#frp1 to src/main/java/Example.java #main()", result)
+        }
+
+        @Test
+        @DisplayName("单参数方法引用")
+        fun `should generate method reference with single parameter`() {
+            val result = generator.generateMethodReference(
+                index = 2,
+                relativePath = "src/main/java/Service.java",
+                methodName = "process",
+                parameterTypes = listOf("String")
+            )
+
+            assertEquals("#frp2 to src/main/java/Service.java #process(String)", result)
+        }
+
+        @Test
+        @DisplayName("多参数方法引用")
+        fun `should generate method reference with multiple parameters`() {
+            val result = generator.generateMethodReference(
+                index = 3,
+                relativePath = "src/main/java/Calculator.kt",
+                methodName = "resolveValue",
+                parameterTypes = listOf("String", "Int")
+            )
+
+            assertEquals("#frp3 to src/main/java/Calculator.kt #resolveValue(String, Int)", result)
+        }
+
+        @Test
+        @DisplayName("复杂泛型参数方法引用")
+        fun `should generate method reference with generic parameters`() {
+            val result = generator.generateMethodReference(
+                index = 5,
+                relativePath = "src/main/java/Processor.java",
+                methodName = "handle",
+                parameterTypes = listOf("List<String>", "Map<String, Object>")
+            )
+
+            assertEquals("#frp5 to src/main/java/Processor.java #handle(List<String>, Map<String, Object>)", result)
+        }
+    }
 }

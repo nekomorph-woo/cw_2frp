@@ -6,7 +6,6 @@ import com.intellij.openapi.actionSystem.ActionGroup
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
-import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 
@@ -43,6 +42,7 @@ class FRPIndexAction(private val index: Int) : AnAction(
 ) {
     private val generator = FRPGenerator()
     private val pathResolver = PathResolver()
+    private val psiContextDetector = PsiContextDetector()
 
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
@@ -59,7 +59,7 @@ class FRPIndexAction(private val index: Int) : AnAction(
         )
 
         val frpText = if (selectionModel.hasSelection()) {
-            // 有选中文本
+            // 有选中文本 - 优先级最高
             val startLine = document.getLineNumber(selectionModel.selectionStart) + 1
             val endLine = document.getLineNumber(selectionModel.selectionEnd) + 1
 
@@ -69,8 +69,26 @@ class FRPIndexAction(private val index: Int) : AnAction(
                 generator.generateTextSelection(index, relativePath, startLine, endLine)
             }
         } else {
-            // 无选中文本，生成文件级引用
-            generator.generateFileReference(index, relativePath)
+            // 无选中文本 - 检测 PSI 上下文
+            when (val context = psiContextDetector.detect(project, editor)) {
+                is PsiContext.MethodContext -> {
+                    // 光标在方法上 - 生成方法引用
+                    generator.generateMethodReference(
+                        index,
+                        relativePath,
+                        context.methodName,
+                        context.parameterTypes
+                    )
+                }
+                is PsiContext.ClassContext -> {
+                    // 光标在类/接口/enum 上 - 生成文件级引用
+                    generator.generateFileReference(index, relativePath)
+                }
+                PsiContext.None -> {
+                    // 未识别上下文 - 生成文件级引用
+                    generator.generateFileReference(index, relativePath)
+                }
+            }
         }
 
         // 复制到剪贴板

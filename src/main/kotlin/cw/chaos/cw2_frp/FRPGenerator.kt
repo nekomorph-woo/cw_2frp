@@ -2,6 +2,8 @@ package cw.chaos.cw2_frp
 
 class FRPGenerator {
 
+    private val signatureFormatter = MethodSignatureFormatter()
+
     fun generateTextSelection(
         index: Int,
         relativePath: String,
@@ -24,5 +26,15 @@ class FRPGenerator {
         relativePath: String
     ): String {
         return "#frp$index to $relativePath"
+    }
+
+    fun generateMethodReference(
+        index: Int,
+        relativePath: String,
+        methodName: String,
+        parameterTypes: List<String>
+    ): String {
+        val signature = signatureFormatter.format(methodName, parameterTypes)
+        return "#frp$index to $relativePath #$signature"
     }
 }
