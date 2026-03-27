@@ -10,7 +10,7 @@ class FRPGenerator {
         startLine: Int,
         endLine: Int
     ): String {
-        return "#frp$index to $relativePath #L$startLine-$endLine"
+        return "#frp$index to @$relativePath #L$startLine-$endLine"
     }
 
     fun generateSingleLineSelection(
@@ -18,14 +18,14 @@ class FRPGenerator {
         relativePath: String,
         line: Int
     ): String {
-        return "#frp$index to $relativePath #L$line"
+        return "#frp$index to @$relativePath #L$line"
     }
 
     fun generateFileReference(
         index: Int,
         relativePath: String
     ): String {
-        return "#frp$index to $relativePath"
+        return "#frp$index to @$relativePath"
     }
 
     fun generateMethodReference(
@@ -35,6 +35,6 @@ class FRPGenerator {
         parameterTypes: List<String>
     ): String {
         val signature = signatureFormatter.format(methodName, parameterTypes)
-        return "#frp$index to $relativePath #$signature"
+        return "#frp$index to @$relativePath #$signature"
     }
 }

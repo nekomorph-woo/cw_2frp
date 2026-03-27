@@ -23,7 +23,7 @@ class FRPGeneratorTest {
                 endLine = 30
             )
 
-            assertEquals("#frp1 to src/main/java/Example.java #L20-30", result)
+            assertEquals("#frp1 to @src/main/java/Example.java #L20-30", result)
         }
 
         @Test
@@ -36,7 +36,7 @@ class FRPGeneratorTest {
                 endLine = 10
             )
 
-            assertEquals("#frp5 to src/main/java/Example.java #L1-10", result)
+            assertEquals("#frp5 to @src/main/java/Example.java #L1-10", result)
         }
 
         @Test
@@ -49,7 +49,7 @@ class FRPGeneratorTest {
                 endLine = 5
             )
 
-            assertEquals("#frp10 to Example.kt #L1-5", result)
+            assertEquals("#frp10 to @Example.kt #L1-5", result)
         }
     }
 
@@ -66,7 +66,7 @@ class FRPGeneratorTest {
                 line = 42
             )
 
-            assertEquals("#frp1 to src/main/java/Example.java #L42", result)
+            assertEquals("#frp1 to @src/main/java/Example.java #L42", result)
         }
 
         @Test
@@ -78,7 +78,7 @@ class FRPGeneratorTest {
                 line = 100
             )
 
-            assertEquals("#frp7 to Test.kt #L100", result)
+            assertEquals("#frp7 to @Test.kt #L100", result)
         }
     }
 
@@ -94,7 +94,7 @@ class FRPGeneratorTest {
                 relativePath = "src/main/java/Example.java"
             )
 
-            assertEquals("#frp1 to src/main/java/Example.java", result)
+            assertEquals("#frp1 to @src/main/java/Example.java", result)
         }
 
         @Test
@@ -105,7 +105,7 @@ class FRPGeneratorTest {
                 relativePath = "app/src/main.kt"
             )
 
-            assertEquals("#frp3 to app/src/main.kt", result)
+            assertEquals("#frp3 to @app/src/main.kt", result)
         }
     }
 
@@ -123,7 +123,7 @@ class FRPGeneratorTest {
                 parameterTypes = emptyList()
             )
 
-            assertEquals("#frp1 to src/main/java/Example.java #main()", result)
+            assertEquals("#frp1 to @src/main/java/Example.java #main()", result)
         }
 
         @Test
@@ -136,7 +136,7 @@ class FRPGeneratorTest {
                 parameterTypes = listOf("String")
             )
 
-            assertEquals("#frp2 to src/main/java/Service.java #process(String)", result)
+            assertEquals("#frp2 to @src/main/java/Service.java #process(String)", result)
         }
 
         @Test
@@ -149,7 +149,7 @@ class FRPGeneratorTest {
                 parameterTypes = listOf("String", "Int")
             )
 
-            assertEquals("#frp3 to src/main/java/Calculator.kt #resolveValue(String, Int)", result)
+            assertEquals("#frp3 to @src/main/java/Calculator.kt #resolveValue(String, Int)", result)
         }
 
         @Test
@@ -162,7 +162,7 @@ class FRPGeneratorTest {
                 parameterTypes = listOf("List<String>", "Map<String, Object>")
             )
 
-            assertEquals("#frp5 to src/main/java/Processor.java #handle(List<String>, Map<String, Object>)", result)
+            assertEquals("#frp5 to @src/main/java/Processor.java #handle(List<String>, Map<String, Object>)", result)
         }
     }
 }
